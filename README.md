@@ -79,6 +79,7 @@ You can also just ask in plain words — "build a scorecard for the CFO role", "
 │   └── marketplace.json             # Lets this repo be added as a marketplace
 ├── .mcp.json                        # 13 MCP server connections
 ├── CONNECTORS.md                    # Connector categories and ~~placeholders
+├── CLAUDE.md                        # Contributor rules (version bumps)
 ├── LICENSE
 ├── README.md
 ├── commands/
