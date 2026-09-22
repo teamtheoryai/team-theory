@@ -20,8 +20,10 @@ Call `get_custom_instructions` and honor any preferences it returns (tone, langu
 
 If the user named or attached a job description, role brief, or intake call — in the request or the conversation — retrieve it from whichever connected tools are available:
 
-- **Documents** (JD, role brief, org chart, board memo): `~~cloud storage`, `~~knowledge base`, or the job posting in `~~ATS`.
+- **Documents** (JD, role brief, org chart, board memo): `~~cloud storage`, `~~knowledge base`, `~~email`, or the job posting in `~~ATS`.
 - **Intake-call transcripts** (hiring manager / investor intake): `~~meeting transcripts`.
+- **Company context** (ownership, stage, size, financials, deal and relationship notes): `~~company data` and `~~CRM`.
+- **Talent market** (who holds comparable roles, typical backgrounds): `~~talent intelligence`.
 - **The org's own library**: `search_portfolio_knowledge` for prior scorecards or JDs for the same company or role.
 
 Rules:
@@ -51,7 +53,7 @@ Render the returned document exactly as the tool instructs (as a document/artifa
 
 ## Step 4 — Offer to push it elsewhere
 
-Look at which destinations are connected: `~~cloud storage`, `~~knowledge base`, `~~ATS` (attach to the job), `~~chat`. Offer the connected ones only, in one short question, e.g. "Want me to save this to Google Drive or post it to the #cfo-search Slack channel?"
+Look at which destinations are connected: `~~cloud storage`, `~~knowledge base`, `~~ATS` (attach to the job), `~~email`, `~~chat`. Offer the connected ones only, in one short question, e.g. "Want me to save this to Google Drive or post it to the #cfo-search Slack channel?"
 
 - Never push, post, or share without an explicit yes and a named destination.
 - After pushing, reply with the link or location.

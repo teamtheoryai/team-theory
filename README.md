@@ -4,7 +4,7 @@ A [Team Theory](https://teamtheory.ai) plugin for Claude Cowork and Claude Code,
 
 Executive hires are made on instinct far more often than anyone admits. The role gets defined in a 30-minute intake call that lives in someone's notes, the job description is a recycled template, and the interview loop is four smart people asking the same "tell me about yourself" questions and comparing gut feels afterwards. The facets that actually predict success in the role get covered twice, or not at all.
 
-Team Theory turns that into a system. This plugin pulls the role context you already have — job descriptions in Google Drive or Box, intake calls in Granola, Metaview or BrightHire, the job in Ashby or Workable — grounds it in Team Theory's hiring methodology, and produces the documents a disciplined search runs on: a role target that defines what success looks like, and an interview plan that splits the target across the panel so every facet is tested once, well.
+Team Theory turns that into a system. This plugin pulls the role context you already have — job descriptions in Google Drive, Box or SharePoint, intake calls in Granola, Metaview or BrightHire, the job in Ashby or Workable, company context from PitchBook and Affinity — grounds it in Team Theory's hiring methodology, and produces the documents a disciplined search runs on: a role target that defines what success looks like, and an interview plan that splits the target across the panel so every facet is tested once, well.
 
 ## Features
 
@@ -46,6 +46,10 @@ Only Team Theory is required. Everything else is optional: the workflows use wha
 | **Notion** | `https://mcp.notion.com/mcp` | Role and company notes; save targets and plans |
 | **Ashby** | `https://mcp.ashbyhq.com/mcp/v1` | ATS — job context; push interview kits |
 | **Workable** | `https://mcp.workable.com/mcp` | ATS — job context; push interview kits |
+| **Microsoft 365** | `https://microsoft365.mcp.claude.com/mcp` | SharePoint and OneDrive documents, Outlook email, Teams — pull JDs and intake notes; save and share targets and plans |
+| **Affinity** | `https://mcp.affinity.co/mcp` | CRM — portfolio company, deal and relationship context |
+| **PitchBook** | `https://premium.mcp.pitchbook.com/mcp` | Company data — ownership, stage, size, financials and peers |
+| **HelloSky** | `https://api.hellosky.ai/mcp/` | Talent intelligence — comparable leaders and the realistic candidate pool |
 
 ### Native Integrations
 
@@ -73,7 +77,7 @@ You can also just ask in plain words — "build a scorecard for the CFO role", "
 ├── .claude-plugin/
 │   ├── plugin.json                  # Plugin manifest
 │   └── marketplace.json             # Lets this repo be added as a marketplace
-├── .mcp.json                        # 9 MCP server connections
+├── .mcp.json                        # 13 MCP server connections
 ├── CONNECTORS.md                    # Connector categories and ~~placeholders
 ├── LICENSE
 ├── README.md
