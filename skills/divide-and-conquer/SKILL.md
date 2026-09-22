@@ -23,19 +23,19 @@ Call `get_custom_instructions` and honor any preferences it returns in every lat
 The plan is built on a scorecard (target). Find it, in this order:
 
 1. **In the conversation** — a target from `/human-capital:target` or a pasted scorecard.
-2. **Where the user pointed** — documents in `~~cloud storage` or `~~knowledge base`, the job in `~~ATS`, intake-call transcripts in `~~meeting transcripts`.
+2. **Where the user pointed** — documents in `~~cloud storage`, `~~knowledge base` or `~~email`, the job in `~~ATS`, intake-call transcripts in `~~meeting transcripts`.
 3. **The org's own library** — `search_portfolio_knowledge` for the role's scorecard.
 
 Only search sources that are actually connected. If several candidates come back, confirm the right one with the user. If there is no scorecard anywhere, offer to run `/human-capital:target` first — a plan without outcomes and competencies to cluster is guesswork.
 
-Distill the scorecard into its facets — each Key Result (R1, R2…) and Competency (CC1, RC1…) with a one-line definition — plus a short company brief (stage, ownership, industry, team, what makes the role hard).
+Distill the scorecard into its facets — each Key Result (R1, R2…) and Competency (CC1, RC1…) with a one-line definition — plus a short company brief (stage, ownership, industry, team, what makes the role hard). Use `~~company data` and `~~CRM` for company context when connected.
 
 ## Step 2 — Ask the setup questions
 
 Ask these in one message, and skip any the user already answered:
 
 1. **How many interviewers** (or interviews) are in the loop?
-2. **Candidate experience base** — who is in the pool? (e.g. sitting CFOs vs. strong #2s stepping up; industry insiders vs. adjacent.) This decides how hard the non-incumbent guard bites.
+2. **Candidate experience base** — who is in the pool? (e.g. sitting CFOs vs. strong #2s stepping up; industry insiders vs. adjacent.) This decides how hard the non-incumbent guard bites. If `~~talent intelligence` is connected, propose an answer from it for the user to confirm.
 3. **Company terminology** — internal words to use (e.g. "business units", "pods", "portcos").
 4. **Facets to emphasize** — anything to weight more heavily or cover twice.
 
@@ -97,4 +97,4 @@ Check which `~~ATS` is connected (e.g. Ashby, Workable, Greenhouse). Offer the c
 - Never create or change anything in the ATS without an explicit yes and the specific job / interview stage confirmed.
 - Map one cluster to one interview (kit / stage), questions and follow-ups included, and the facets as its scorecard attributes where the ATS supports it.
 - After pushing, reply with links or locations. If a cluster couldn't be pushed, say which and why.
-- If no ATS is connected, offer the other connected destinations (`~~cloud storage`, `~~knowledge base`, `~~chat`) instead, or skip silently if there are none.
+- If no ATS is connected, offer the other connected destinations (`~~cloud storage`, `~~knowledge base`, `~~email`, `~~chat`) instead, or skip silently if there are none.
