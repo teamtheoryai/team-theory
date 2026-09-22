@@ -1,0 +1,17 @@
+{
+  "name": "human-capital",
+  "owner": {
+    "name": "Team Theory"
+  },
+  "metadata": {
+    "description": "Human capital workflows for Claude, powered by Team Theory."
+  },
+  "plugins": [
+    {
+      "name": "human-capital",
+      "displayName": "Human Capital",
+      "source": "./",
+      "description": "Human capital workflows: /human-capital:target (role scorecard) and /human-capital:interview-plan (Divide & Conquer interview plan)."
+    }
+  ]
+}
