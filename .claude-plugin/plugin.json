@@ -1,0 +1,21 @@
+{
+  "name": "human-capital",
+  "displayName": "Human Capital",
+  "version": "0.1.0",
+  "description": "Human capital workflows powered by Team Theory: build a role target (scorecard) and a Divide & Conquer interview plan, grounded in Team Theory methodology and your connected docs, transcripts and ATS.",
+  "author": {
+    "name": "Team Theory",
+    "url": "https://teamtheory.ai"
+  },
+  "homepage": "https://github.com/teamtheoryai/human-capital-plugin",
+  "repository": "https://github.com/teamtheoryai/human-capital-plugin",
+  "keywords": [
+    "human-capital",
+    "hiring",
+    "scorecard",
+    "interview-plan",
+    "talent",
+    "team-theory"
+  ],
+  "license": "MIT"
+}
