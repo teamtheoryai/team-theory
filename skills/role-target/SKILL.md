@@ -1,64 +1,66 @@
 ---
 name: role-target
-description: Create a role target (Team Theory scorecard) — Mission, Outcomes, Competencies — from a job description, intake-call transcript, or whatever role context the user has. Use when the user runs /human-capital:target, says "create a target", "build a scorecard", "define the role", or shares a JD / intake call and wants the role defined.
+description: Recipe that produces a role target (Team Theory scorecard) from a job description, intake-call transcript, or role context. Use when the user runs /human-capital:target, says "create a target", "build a scorecard", "define the role", or shares a JD / intake call and wants the role defined.
 user-invocable: false
 ---
 
-# Role target (scorecard)
+# Recipe: role target (scorecard)
 
-> If you see unfamiliar placeholders or need to check which tools are connected, see [CONNECTORS.md](../../CONNECTORS.md).
+> This skill is a recipe: it says which tools to call, what to fetch, and where the result goes. The judgment comes from Team Theory (the workflow, its reading list, the user's preferences). If you see unfamiliar placeholders or need to check which tools are connected, see [CONNECTORS.md](../../CONNECTORS.md).
 
-A **target** is a Team Theory scorecard: the role's mission, the outcomes (key results) the hire must deliver, and the competencies that predict delivering them. Team Theory generates the final document — never write the scorecard yourself.
+**Team Theory workflow:** `SCI-W-006` (Scorecard Builder), or the firm's own scorecard workflow when `get_workflow` lists one for the firm the request concerns.
 
-Tool names below are the Team Theory MCP tools (`search_methodology_knowledge`, `generate_document`, `get_custom_instructions`, `search_portfolio_knowledge`). Your client may prefix them (e.g. `mcp__team-theory__…`). If the Team Theory tools are not available, stop and tell the user to connect the Team Theory MCP server (`https://app.teamtheory.ai/mcp`).
+Tool names are the Team Theory MCP tools; your client may prefix them (e.g. `mcp__team-theory__…`). If the Team Theory tools are missing, stop and tell the user to connect `https://app.teamtheory.ai/mcp`.
 
-## Step 0 — Preferences
+## 1. Load the method
 
-Call `get_custom_instructions` and honor any preferences it returns (tone, language, formatting) in every later step and in the `context` you pass to `generate_document`.
+1. `get_custom_instructions`. Apply the result to every later step.
+2. `get_workflow` with the workflow id above.
+3. `read_methodology` for every item on the workflow's reading list, in order.
 
-## Step 1 — Gather role context (only if the user pointed to it)
+## 2. Fetch the inputs
 
-If the user named or attached a job description, role brief, or intake call — in the request or the conversation — retrieve it from whichever connected tools are available:
+Fetch only what the user pointed to, from sources that are connected. Skip the rest without comment.
 
-- **Documents** (JD, role brief, org chart, board memo): `~~cloud storage`, `~~knowledge base`, `~~email`, or the job posting in `~~ATS`.
-- **Intake-call transcripts** (hiring manager / investor intake): `~~meeting transcripts`.
-- **Company context** (ownership, stage, size, financials, deal and relationship notes): `~~company data` and `~~CRM`.
-- **Talent market** (who holds comparable roles, typical backgrounds): `~~talent intelligence`.
-- **The org's own library**: `search_portfolio_knowledge` for prior scorecards or JDs for the same company or role.
+| Input | Source | What to fetch |
+|---|---|---|
+| Job description or role brief | `~~cloud storage`, `~~knowledge base`, `~~email`, `~~ATS` (job posting) | The document the user named |
+| Intake call | `~~meeting transcripts` | The transcript the user named |
+| Company context | `~~company data`, `~~CRM` | Ownership, stage, size, financials, deal and relationship notes for the company |
+| Talent market | `~~talent intelligence` | Holders of comparable roles at comparable companies |
+| Firm's records | Team Theory `list_roles`, `list_documents`, `get_document` | The role, if it exists, and any prior scorecard for the same company or role |
+| Firm's documents | Team Theory `search_portfolio_knowledge` | Prior scorecards or JDs for the same company or role |
 
-Rules:
-- Only search sources that are actually connected. Don't list or apologize for the ones that aren't.
-- If the user gave no pointer and nothing is attached, ask once: role title, company, and whether there's a JD or intake call to pull from. If they have none, proceed with what they tell you.
-- If a search returns several candidates (e.g. three intake calls for "CFO"), confirm the right one with the user before using it.
-- Distill what you retrieve into a tight brief: role, company, stage/ownership (e.g. PE-backed, portco), reporting line, team size, mandate, 12–36 month outcomes, must-haves, known risks, and key quotes from the intake call. Do not forward raw transcripts or whole documents.
+- The Team Theory firm tools are available only to firm members. If one is not in your tool list, skip it.
+- If a search returns more than one match, ask the user which one.
+- If the user pointed to nothing, ask once for the role title, the company, and whether a JD or intake call exists. Continue with the answer.
 
-## Step 2 — Ground in scorecard methodology
+## 3. Write the target
 
-Call `search_methodology_knowledge` for scorecard best practices, specific to the role, e.g.:
+Carry out the workflow's steps with the inputs from step 2. Report one line per step in chat (e.g. "Reading the intake call."). Produce the target in the **Output format** below.
 
-- `"scorecard mission outcomes competencies for [role]"`
-- `"key results for [role] in a PE-backed [industry] company"` (when relevant)
+## 4. Check it
 
-Pick the 2–5 most relevant excerpts. Summarize any that are long.
+`check_methodology_trace` with the workflow id and the full draft. Fix everything it reports and run it again until it returns PASS.
 
-## Step 3 — Generate the target
+## 5. Offer destinations
 
-Call `generate_document` with:
+Offer the connected destinations in one short question:
 
-- `documentType`: `"scorecard"`
-- `context`: the distilled brief from Step 1 plus the user's preferences from Step 0.
-- `knowledgeBaseChunks`: the excerpts from Step 2 (and any relevant `search_portfolio_knowledge` excerpts).
+| Destination | Action |
+|---|---|
+| `~~cloud storage`, `~~knowledge base` | Save the target as a document |
+| `~~ATS` | Attach the target to the job |
+| `~~email` | Draft an email to the hiring team with the target attached |
+| `~~chat` | Post the target to the channel the user names |
 
-Render the returned document exactly as the tool instructs (as a document/artifact, verbatim). Do not paste, summarize, or rewrite it in chat.
+Push only after an explicit yes and a named destination. Reply with the link or location. If nothing is connected, skip this step.
 
-## Step 4 — Offer to push it elsewhere
+## Output format
 
-Look at which destinations are connected: `~~cloud storage`, `~~knowledge base`, `~~ATS` (attach to the job), `~~email`, `~~chat`. Offer the connected ones only, in one short question, e.g. "Want me to save this to Google Drive or post it to the #cfo-search Slack channel?"
-
-- Never push, post, or share without an explicit yes and a named destination.
-- After pushing, reply with the link or location.
-- If nothing suitable is connected, skip this step silently.
-
-## Output format & nuances
-
-<!-- TODO: to be defined. -->
+- One artifact (document), not chat text. In chat, say one line and where the artifact is.
+- Header block: role title, company, date, and the inputs used (document names and dates).
+- The sections the workflow specifies, in its order, each under its own heading.
+- Lists of outcomes and competencies as tables, one row per item, with its ID (`R1`, `CC1`…) in the first column.
+- One to two pages.
+- Last two sections: **Sources** (each input with its location) and **Methodology trace**, in the form `get_workflow` specifies.

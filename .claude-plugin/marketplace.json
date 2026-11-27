@@ -11,7 +11,7 @@
       "name": "human-capital",
       "displayName": "Human Capital",
       "source": "./",
-      "description": "Human capital workflows: /human-capital:target (role scorecard) and /human-capital:interview-plan (Divide & Conquer interview plan)."
+      "description": "Human capital recipes: /human-capital:target (role scorecard), /human-capital:interview-plan (Divide & Conquer interview plan) and /human-capital:underwriting-memo (candidate underwriting memo)."
     }
   ]
 }
