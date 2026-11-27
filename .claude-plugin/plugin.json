@@ -1,8 +1,8 @@
 {
   "name": "human-capital",
   "displayName": "Human Capital",
-  "version": "0.3.0",
-  "description": "Human capital recipes powered by Team Theory: a role target (scorecard), a Divide & Conquer interview plan, and a candidate underwriting memo, built from your docs, transcripts and ATS with Team Theory methodology.",
+  "version": "0.4.0",
+  "description": "Human capital recipes powered by Team Theory: one recipe per Team Theory workflow, from role target to portfolio talent review, plus an orchestrator that routes requests across your connectors and Team Theory.",
   "author": {
     "name": "Team Theory",
     "url": "https://teamtheory.ai"
@@ -10,10 +10,13 @@
   "homepage": "https://github.com/teamtheoryai/team-theory",
   "repository": "https://github.com/teamtheoryai/team-theory",
   "keywords": [
-    "human-capital",
     "hiring",
-    "scorecard",
+    "human-capital",
     "interview-plan",
+    "leadership-assessment",
+    "portfolio-talent-review",
+    "reference-check",
+    "scorecard",
     "talent",
     "team-theory",
     "underwriting-memo"
