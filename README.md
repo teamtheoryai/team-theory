@@ -25,6 +25,8 @@ Each recipe pulls the inputs from your connected tools, has Team Theory supply t
 | Decision | Underwriting memo | `/human-capital:underwriting-memo` | A one-page memo on a candidate for the deal team |
 | Process | Candidate closing | `/human-capital:candidate-closing` | A closing strategy, actions and draft messages |
 | Post-hire | Portfolio talent review | `/human-capital:portfolio-talent-review` | An **interactive dashboard** of the firm's portfolio ratings, risks and trends, every value traceable to its source |
+| Setup | Talent Partner Brain | `/human-capital:talent-brain` | A self-maintaining wiki of every company, seat, executive and search in the portfolio, inside the user's Cowork project, seeded from Team Theory and fed on a schedule from their meetings, email and documents |
+
 
 General talent questions (Team Theory's General Advice workflow) go to the orchestrator, which answers from the methodology.
 
@@ -92,7 +94,8 @@ You can also just ask in plain words — "build a scorecard for the CFO role", "
     ├── role-target/  job-description/  screening-interview/  quick-interview-plan/
     ├── deep-dive-interview/  divide-and-conquer/  candidate-research/  quote-ranking/
     ├── leadership-assessment/  reference-check/  underwriting-memo/  candidate-closing/
-    └── portfolio-talent-review/
+    ├── portfolio-talent-review/
+    └── talent-brain/                # Sets up the Talent Partner Brain: SKILL.md, the project instructions, the build spec
 ```
 
 ## How the recipes are written

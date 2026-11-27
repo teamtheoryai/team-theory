@@ -32,6 +32,7 @@ Read these when a request calls for them:
 | Candidate underwriting memo | `underwriting-memo` | `SCI-W-012` |
 | Candidate closing plan | `candidate-closing` | `SCI-W-009` |
 | Portfolio talent review (dashboard) | `portfolio-talent-review` | `SCI-W-011` |
+| Set up a Talent Partner Brain (a self-maintaining portfolio wiki in the user's Cowork project) | `talent-brain` | — |
 
 2. **A play from the cookbook matches.** Run its steps in order, delivering each artifact as it completes.
 3. **A Team Theory workflow matches that no recipe covers,** including the firm's own workflows listed by `get_workflow`. Run the five recipe steps with that workflow, its inputs fetched from the map below, and a document artifact as the output.

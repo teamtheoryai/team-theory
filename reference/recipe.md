@@ -19,6 +19,7 @@ Fetch what the skill's inputs table lists, from sources that are connected. Skip
 - Read a whole document with `get_document`. Never rebuild a document from `search_portfolio_knowledge` fragments; see [memory-and-documents.md](memory-and-documents.md).
 - If a search returns more than one match, ask the user which one.
 - If an input the skill marks **required** is missing, ask the user where it is, once, then continue with the answer.
+- If the project holds a Talent Partner Brain (`BRAIN.md` in its folder), read the wiki pages for the company, seat, people and search first, and cite them like any other source. In step 5, also save the artifact to the brain's `outputs/` and link it from those pages.
 
 ## 3. Produce the artifact
 

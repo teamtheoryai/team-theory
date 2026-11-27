@@ -25,6 +25,7 @@ The talent partner typically covers twenty or more portfolio companies with litt
 | **Hold** | Explain where a rating came from before a board meeting | (orchestrator) | `list_observations`, `explain_observation`, `list_review_cycles` |
 | **Hold** | Plan succession for critical seats | `portfolio-talent-review` | Portfolio metrics; methodology: succession planning (`SCI-F-013`) |
 | **Exit** | Show buyers the leadership team is an asset | `portfolio-talent-review`, `leadership-assessment` | Review cycles; methodology: PE human capital lifecycle (`SCI-F-015`) |
+| **Function** | Stop rebuilding context before every board meeting, search kickoff and CEO call | `talent-brain` | Team Theory records to seed it; `~~meeting transcripts`, `~~email`, `~~cloud storage` to feed it |
 | **Function** | Answer a methodology question for a deal partner or a portfolio CEO | (orchestrator) | `find_methodology`, `read_methodology` |
 | **Function** | Keep the firm's records current after a hire | (orchestrator) | `create_person`, `create_role`, `link_person_to_role` |
 | **Function** | Show the deal team what the talent function delivered this quarter | (orchestrator) | `list_review_cycles`, `get_portfolio_trend`, `list_searches`; methodology: value demonstration (S7) |
