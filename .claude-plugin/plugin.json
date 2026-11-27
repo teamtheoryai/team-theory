@@ -1,8 +1,8 @@
 {
   "name": "human-capital",
   "displayName": "Human Capital",
-  "version": "0.2.0",
-  "description": "Human capital workflows powered by Team Theory: build a role target (scorecard) and a Divide & Conquer interview plan, grounded in Team Theory methodology and your connected docs, transcripts and ATS.",
+  "version": "0.3.0",
+  "description": "Human capital recipes powered by Team Theory: a role target (scorecard), a Divide & Conquer interview plan, and a candidate underwriting memo, built from your docs, transcripts and ATS with Team Theory methodology.",
   "author": {
     "name": "Team Theory",
     "url": "https://teamtheory.ai"
@@ -15,7 +15,8 @@
     "scorecard",
     "interview-plan",
     "talent",
-    "team-theory"
+    "team-theory",
+    "underwriting-memo"
   ],
   "license": "MIT"
 }

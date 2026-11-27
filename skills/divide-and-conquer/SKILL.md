@@ -1,100 +1,76 @@
 ---
 name: divide-and-conquer
-description: Build a Team Theory Divide & Conquer interview plan — split the scorecard's outcomes and competencies into thematic clusters, one per interviewer, with validated behavioral questions and follow-ups for each. Use when the user runs /human-capital:interview-plan, says "divide and conquer", "interview plan", "split the interviews across the panel", or wants interview guides for multiple interviewers from a scorecard or target.
+description: Recipe that produces a Team Theory Divide & Conquer interview plan from a scorecard, one guide per interviewer, and pushes it to the ATS. Use when the user runs /human-capital:interview-plan, says "divide and conquer", "interview plan", "split the interviews across the panel", or wants interview guides for multiple interviewers from a scorecard or target.
 user-invocable: false
 ---
 
-# Divide & Conquer interview plan
+# Recipe: Divide & Conquer interview plan
 
-> If you see unfamiliar placeholders or need to check which tools are connected, see [CONNECTORS.md](../../CONNECTORS.md).
+> This skill is a recipe: it says which tools to call, what to fetch, and where the result goes. The judgment comes from Team Theory (the workflow, its reading list, the user's preferences). If you see unfamiliar placeholders or need to check which tools are connected, see [CONNECTORS.md](../../CONNECTORS.md).
 
-Divide & Conquer gives each interviewer a distinct slice of the scorecard, so the panel covers every facet once, with no two interviewers asking the same questions. Team Theory generates the final document — never write the plan document yourself.
+**Team Theory workflow:** `SCI-W-004` (Divide and Conquer Interview Plans Builder), or the firm's own interview-plan workflow when `get_workflow` lists one for the firm the request concerns.
 
-Tool names below are the Team Theory MCP tools (`search_methodology_knowledge`, `generate_document`, `get_custom_instructions`, `search_portfolio_knowledge`). Your client may prefix them (e.g. `mcp__team-theory__…`). If the Team Theory tools are not available, stop and tell the user to connect the Team Theory MCP server (`https://app.teamtheory.ai/mcp`).
+Tool names are the Team Theory MCP tools; your client may prefix them (e.g. `mcp__team-theory__…`). If the Team Theory tools are missing, stop and tell the user to connect `https://app.teamtheory.ai/mcp`.
 
-Steps 3–5 are working steps: do them in your own reasoning and tell the user only one line per step (e.g. "Creating thematic clusters from the scorecard."). Don't show cluster tables, drafts, or validation notes in chat.
+## 1. Load the method
 
-## Step 0 — Preferences
+1. `get_custom_instructions`. Apply the result to every later step.
+2. `get_workflow` with the workflow id above.
+3. `read_methodology` for every item on the workflow's reading list, in order.
 
-Call `get_custom_instructions` and honor any preferences it returns in every later step and in the `context` you pass to `generate_document`.
+## 2. Fetch the inputs
 
-## Step 1 — Retrieve the scorecard / target and company context
+Fetch the scorecard from the first place it is found:
 
-The plan is built on a scorecard (target). Find it, in this order:
+1. This conversation (a target from `/human-capital:target`, or a pasted scorecard).
+2. Where the user pointed: `~~cloud storage`, `~~knowledge base`, `~~email`, `~~ATS` (the job).
+3. Team Theory `list_documents` / `get_document`, then `search_portfolio_knowledge`, for the role's scorecard.
 
-1. **In the conversation** — a target from `/human-capital:target` or a pasted scorecard.
-2. **Where the user pointed** — documents in `~~cloud storage`, `~~knowledge base` or `~~email`, the job in `~~ATS`, intake-call transcripts in `~~meeting transcripts`.
-3. **The org's own library** — `search_portfolio_knowledge` for the role's scorecard.
+If no scorecard exists, offer to run `/human-capital:target` first and stop.
 
-Only search sources that are actually connected. If several candidates come back, confirm the right one with the user. If there is no scorecard anywhere, offer to run `/human-capital:target` first — a plan without outcomes and competencies to cluster is guesswork.
+Then fetch, from sources that are connected:
 
-Distill the scorecard into its facets — each Key Result (R1, R2…) and Competency (CC1, RC1…) with a one-line definition — plus a short company brief (stage, ownership, industry, team, what makes the role hard). Use `~~company data` and `~~CRM` for company context when connected.
+| Input | Source | What to fetch |
+|---|---|---|
+| Intake call | `~~meeting transcripts` | The intake call for the role, if the user named one |
+| Company context | `~~company data`, `~~CRM` | Ownership, stage, industry, team size |
+| Candidate pool | `~~talent intelligence` | Backgrounds of holders of comparable roles, to prefill the candidate-experience question |
+| Interviewers | `~~ATS` | The interview panel on the job, if set |
 
-## Step 2 — Ask the setup questions
+- The Team Theory firm tools are available only to firm members. If one is not in your tool list, skip it.
+- If a search returns more than one match, ask the user which one.
 
-Ask these in one message, and skip any the user already answered:
+## 3. Ask the workflow's setup questions
 
-1. **How many interviewers** (or interviews) are in the loop?
-2. **Candidate experience base** — who is in the pool? (e.g. sitting CFOs vs. strong #2s stepping up; industry insiders vs. adjacent.) This decides how hard the non-incumbent guard bites. If `~~talent intelligence` is connected, propose an answer from it for the user to confirm.
-3. **Company terminology** — internal words to use (e.g. "business units", "pods", "portcos").
-4. **Facets to emphasize** — anything to weight more heavily or cover twice.
+Ask the questions the workflow's setup step lists, in one message. Prefill any answer found in step 2 for the user to confirm. Skip any the user already answered. Wait for the answers.
 
-Wait for the answers before continuing.
+## 4. Write the plan
 
-## Step 3 — Create thematic clusters
+Carry out the workflow's remaining steps. Report one line per step in chat (e.g. "Creating the clusters."). Keep clusters, drafts and validation notes out of chat. Produce the plan in the **Output format** below.
 
-Call `search_methodology_knowledge` for the clustering method and themes, e.g.:
+## 5. Check it
 
-- `"divide and conquer interview clustering scorecard facets into interviews"`
-- `"interview themes for [role] competencies"`
+`check_methodology_trace` with the workflow id and the full draft. Fix everything it reports and run it again until it returns PASS.
 
-Apply what it returns. The floor, whatever the search says:
+## 6. Offer destinations
 
-- One cluster per interviewer; 2–4 facets per cluster; sizes roughly balanced.
-- Every facet in at least one cluster, none in three or more. Emphasized facets may appear twice.
-- Group by natural theme (people and influence, functional depth, strategy and judgment, execution, talent and team-building…). Cluster names are 3 words max.
-- Warn the user if there are fewer than 2 interviewers (thin coverage) or more interviewers than half the facet count (too many interviews for too few facets).
+Offer the connected destinations in one short question:
 
-## Step 4 — Generate questions for each cluster
+| Destination | Action |
+|---|---|
+| `~~ATS` | Create one interview (kit or stage) per interviewer guide on the confirmed job: questions, follow-ups, and the guide's facets as scorecard attributes where the ATS supports them |
+| `~~cloud storage`, `~~knowledge base` | Save the plan as a document |
+| `~~email` | Draft one email per interviewer with their guide |
+| `~~chat` | Post the plan to the channel the user names |
 
-Call `search_methodology_knowledge` for question-generation instructions once, then for question-bank examples **once per cluster**, e.g.:
+Push only after an explicit yes, with the job and interview stage confirmed. Reply with links or locations. If a guide could not be pushed, say which one and the error returned.
 
-- `"divide and conquer question generation rules behavioral interview"`
-- `"[role] [cluster theme] interview questions"` — one per cluster.
+## Output format
 
-Use the bank as inspiration, not templates. Draft 7–10 questions per cluster, each with 2–4 short follow-up bullets. The floor:
-
-- Every question elicits a **story**, and the candidate can't guess the "good" answer from it (side-door framing).
-- **≤15 words, one question, no second clause.** Trust the follow-ups.
-- **Non-incumbent guard:** never assume they've done the exact thing ("In the most senior role you've held…", not "In your last CEO role…").
-- **Never broadcast the scorecard:** no Key Result or Competency named in the question.
-- Mix **Event** (positive before negative), **Attribute** (paired; first follow-up asks for an example) and **TORC** (get the first and last name first, then the 1–10 rating and "what would they improve" as follow-ups; place late).
-- Use the company's terminology from Step 2; otherwise avoid structural jargon.
-- Open each guide with an energizing, rapport-building question.
-
-## Step 5 — Validate the full set
-
-Call `search_methodology_knowledge` for the validation checklist, e.g. `"divide and conquer interview question validation quality redundancy coverage"`. Then review **all** clusters together, with fresh eyes:
-
-- **Quality** — rewrite anything that fails the Step 4 floor.
-- **Redundancy** — no two questions, in the same guide or across guides, likely to surface the same story. Merge or replace.
-- **Coverage** — every facet is probed by at least one question in its cluster; every guide mixes question types and is sequenced well.
-
-## Step 6 — Generate the final plan
-
-Call `generate_document` with:
-
-- `documentType`: `"dc-validation"` (the Divide & Conquer final-stage document: header, role overview, facet coverage map, one guide per interviewer with questions, follow-ups and a scoring table).
-- `context`: the role and company brief, the setup answers from Step 2, the clusters (name, facets, goal), and **every validated question with its follow-ups**, plus the user's preferences. The generator formats what you pass; it should not have to invent questions.
-- `knowledgeBaseChunks`: the 2–5 most useful methodology excerpts from Steps 3–5.
-
-Render the returned document exactly as the tool instructs (as a document/artifact, verbatim). Do not paste, summarize, or rewrite it in chat.
-
-## Step 7 — Offer to push to the ATS
-
-Check which `~~ATS` is connected (e.g. Ashby, Workable, Greenhouse). Offer the connected ones in one short question, e.g. "Want me to add these as interview kits on the CFO job in Ashby, one per interviewer?"
-
-- Never create or change anything in the ATS without an explicit yes and the specific job / interview stage confirmed.
-- Map one cluster to one interview (kit / stage), questions and follow-ups included, and the facets as its scorecard attributes where the ATS supports it.
-- After pushing, reply with links or locations. If a cluster couldn't be pushed, say which and why.
-- If no ATS is connected, offer the other connected destinations (`~~cloud storage`, `~~knowledge base`, `~~email`, `~~chat`) instead, or skip silently if there are none.
+- One artifact (document), not chat text. In chat, say one line and where the artifact is.
+- Header block: role title, company, date, number of interviewers, and the scorecard used.
+- **Facet coverage map:** a table with one row per scorecard facet (ID and name) and one column per interviewer, marking who covers it.
+- **One guide per interviewer**, each under its own heading with the cluster name: the facets it covers, then numbered questions, each with its follow-ups as bullets beneath it.
+- A **scoring table** at the end of each guide: one row per facet, with columns for rating and evidence.
+- Each guide fits on one page so it can be handed to the interviewer on its own.
+- Last section: **Methodology trace**, in the form `get_workflow` specifies.
