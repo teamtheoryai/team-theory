@@ -23,6 +23,7 @@ Example prompts, and the strategic plays Team Theory can run for a PE talent par
 | "What does Team Theory say about back-channel references?" | `grep_methodology`, `read_methodology` |
 | "Who sits in every CFO seat in the portfolio, and since when?" | `list_roles`, `list_people` |
 | "What do we already know about this company?" | `get_organization_memory`, `list_documents` |
+| "Set up a brain that remembers everything about my portfolio." | `talent-brain` |
 
 ## Strategic plays
 
