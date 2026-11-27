@@ -88,6 +88,8 @@ You can also just ask in plain words — "build a scorecard for the CFO role", "
 ├── CONNECTORS.md                    # Connector categories and ~~placeholders
 ├── LICENSE
 ├── README.md
+├── agents/
+│   └── orchestrator.md              # Routes requests across recipes, connectors and Team Theory
 ├── commands/
 │   ├── target.md                    # /human-capital:target
 │   ├── interview-plan.md            # /human-capital:interview-plan
@@ -113,6 +115,8 @@ Every skill in this plugin is a recipe, in the sense Zapier uses the word. **A s
 Each recipe ends with `check_methodology_trace` and fixes what it reports before the user sees the result.
 
 Keep new skills to this shape. A rule about what a good question, competency or memo is belongs in Team Theory's methodology, not in a skill: written there, it reaches every recipe and the Team Theory app at once, and improves with each methodology release. Written in a skill, it is a second copy that drifts.
+
+**The orchestrator** (`agents/orchestrator.md`) is a subagent that routes requests: it holds the map of what each connector and each Team Theory tool can do, hands off to a recipe when one matches, and otherwise loads the matching Team Theory workflow. Like the recipes, it holds no judgment of its own. When you add a recipe or a connector, add it to the orchestrator's map.
 
 **Commands** are entry points: one sentence to orient the user, then the skill.
 
