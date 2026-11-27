@@ -23,19 +23,6 @@ Only **Team Theory** is required. Every other category is optional: a workflow u
 | Company data | `~~company data` | PitchBook | Crunchbase, S&P Capital IQ |
 | Talent intelligence | `~~talent intelligence` | HelloSky | LinkedIn Recruiter |
 
-## What each category is used for
-
-| Placeholder | `/human-capital:target` | `/human-capital:interview-plan` | `/human-capital:underwriting-memo` |
-|-------------|-----------|-------------------|-------------------|
-| `~~Team Theory` | Preferences (`get_custom_instructions`), the workflow and its reading list (`get_workflow`, `read_methodology`), the firm's prior scorecards (`list_documents`, `search_portfolio_knowledge`), and the check (`check_methodology_trace`) | The same, plus the scorecard from the firm's documents | The same, plus the candidate record (`list_people`, `get_person`) |
-| `~~meeting transcripts` | The intake call | The intake call | Interview and reference-call transcripts |
-| `~~cloud storage` | The job description or role brief; save the target | The scorecard; save the plan | The scorecard, references, assessments; save the memo |
-| `~~knowledge base` | Role or company notes; save the target | The scorecard; save the plan | Save the memo |
-| `~~ATS` | The job posting; attach the target to the job | The job and panel; one interview kit per interviewer | The resume; attach the memo to the candidate |
-| `~~email` | The JD or intake notes; draft to the hiring team | The scorecard; one draft per interviewer | Draft to the deal team |
-| `~~chat` | Share the target | Share the plan | Share the memo |
-| `~~CRM` | Company, deal and relationship context | Company context | Company and deal context |
-| `~~company data` | Ownership, stage, size, financials, peers | Ownership, stage, industry, team size | Company context |
-| `~~talent intelligence` | Holders of comparable roles | Backgrounds in the candidate pool | — |
+Each recipe's own inputs and destinations tables (in `skills/*/SKILL.md`) say which categories it uses and for what.
 
 Nothing is pushed, posted or shared without the user's explicit yes and a named destination.

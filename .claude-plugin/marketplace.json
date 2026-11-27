@@ -11,7 +11,7 @@
       "name": "human-capital",
       "displayName": "Human Capital",
       "source": "./",
-      "description": "Human capital recipes: /human-capital:target (role scorecard), /human-capital:interview-plan (Divide & Conquer interview plan) and /human-capital:underwriting-memo (candidate underwriting memo)."
+      "description": "Human capital recipes powered by Team Theory: role target, job description, interview plans (including an interactive Divide & Conquer artifact), candidate research, leadership assessment, references, underwriting memo, closing, and a portfolio talent review dashboard."
     }
   ]
 }

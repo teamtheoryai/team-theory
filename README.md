@@ -8,34 +8,27 @@ Team Theory turns that into a system. This plugin pulls the role context you alr
 
 ## Recipes
 
-Each recipe pulls the inputs from your connected tools, has Team Theory supply the method, writes the deliverable as an artifact, checks it against the methodology, and offers to push it where your team works.
+Each recipe pulls the inputs from your connected tools, has Team Theory supply the method, produces the deliverable as an artifact, checks it against the methodology, and offers to push it where your team works. One recipe per Team Theory workflow.
 
-### 1. Role target
-A Team Theory scorecard for the role: mission, outcomes and competencies. Pulls the job description or intake call you point to, plus company and market context.
+| Stage | Recipe | Slash command | Delivers |
+|---|---|---|---|
+| Role definition | Role target | `/human-capital:target` | The scorecard: mission, outcomes, competencies |
+| Role definition | Job description | `/human-capital:job-description` | A posting built from the target; pushed to the ATS on a yes |
+| Assessment | Screening interview | `/human-capital:screening-interview` | A one-page screening guide for the long list |
+| Assessment | Quick interview plan | `/human-capital:quick-interview-plan` | A one-page plan for one interviewer and one candidate |
+| Assessment | Deep-dive interview | `/human-capital:deep-dive-interview` | A career-walk interview guide |
+| Assessment | Divide & Conquer interview plan | `/human-capital:interview-plan` | An **interactive** artifact: one tab per interviewer with questions, notes and scoring; one kit per interviewer in the ATS |
+| Assessment | Candidate research | `/human-capital:candidate-research` | A cited background report on a candidate's career and companies |
+| Decision | Quote finder and ranker | `/human-capital:quote-ranking` | Every relevant verbatim quote, ranked and mapped to the scorecard |
+| Decision | Leadership assessment | `/human-capital:leadership-assessment` | An evidence-based assessment against the target |
+| Process | Reference check | `/human-capital:reference-check` | Who to call and what to ask each reference |
+| Decision | Underwriting memo | `/human-capital:underwriting-memo` | A one-page memo on a candidate for the deal team |
+| Process | Candidate closing | `/human-capital:candidate-closing` | A closing strategy, actions and draft messages |
+| Post-hire | Portfolio talent review | `/human-capital:portfolio-talent-review` | An **interactive dashboard** of the firm's portfolio ratings, risks and trends, every value traceable to its source |
 
-**Slash command:** `/human-capital:target`
+General talent questions (Team Theory's General Advice workflow) go to the orchestrator, which answers from the methodology.
 
-```
-/human-capital:target CFO for a PE-backed industrial services company, intake call in Granola from Tuesday
-```
-
-### 2. Divide & Conquer interview plan
-One interview guide per interviewer, built from the scorecard, with a facet coverage map and a scoring table per guide. Offers to push one interview kit per interviewer to your ATS.
-
-**Slash command:** `/human-capital:interview-plan`
-
-```
-/human-capital:interview-plan from the CFO target above, 4 interviewers
-```
-
-### 3. Candidate underwriting memo
-A one-page memo on a candidate for the deal team, built from the interview transcripts, reference calls, resume, assessments and scorecard. Every claim cites its source.
-
-**Slash command:** `/human-capital:underwriting-memo`
-
-```
-/human-capital:underwriting-memo the CFO finalist, interviews in Metaview
-```
+You can also just ask in plain words, or describe a bigger goal ("run the CFO search end to end", "get me ready for the board's talent update"): the **orchestrator** subagent routes it and chains the recipes. See the [cookbook](reference/cookbook.md) for prompts and plays.
 
 ## MCP Connectors
 
@@ -43,7 +36,7 @@ Only Team Theory is required. Everything else is optional: the workflows use wha
 
 | Connector | URL | Purpose |
 |-----------|-----|---------|
-| **Team Theory** | `https://app.teamtheory.ai/mcp` | Required — the methodology (workflows and their reading lists, the trace check), your preferences, and your firm's records and documents |
+| **Team Theory** | `https://app.teamtheory.ai/mcp` | Required — the methodology (workflows and their reading lists, the trace check), your preferences, and your firm's memory, records, documents and portfolio data |
 | **Granola** | `https://mcp.granola.ai/mcp` | Intake-call transcripts and meeting notes |
 | **Metaview** | `https://mcp.metaview.ai/mcp` | Interview intelligence — intake and interview transcripts |
 | **BrightHire** | `https://app.brighthire.ai/mcp/v1` | Interview intelligence — intake and interview transcripts |
@@ -73,7 +66,7 @@ These are native Claude integrations — no MCP connector install needed. They'r
 2. Sign in to Team Theory when prompted, and connect any optional platforms you use
 3. Run `/human-capital:target` with the role, and point Claude at the JD or intake call if you have one
 4. Run `/human-capital:interview-plan` to split the target across your interview panel
-5. Run `/human-capital:underwriting-memo` once the candidate has been interviewed and referenced
+5. Run `/human-capital:underwriting-memo` once the candidate has been interviewed and referenced, or any recipe in the table above
 6. Say yes when Claude offers to push a result to your ATS, drive or channel — nothing is pushed, posted or shared without your explicit yes
 
 You can also just ask in plain words — "build a scorecard for the CFO role", "split the interviews across four people" — and the right workflow starts.
@@ -84,23 +77,22 @@ You can also just ask in plain words — "build a scorecard for the CFO role", "
 ├── .claude-plugin/
 │   ├── plugin.json                  # Plugin manifest
 │   └── marketplace.json             # Lets this repo be added as a marketplace
-├── .mcp.json                        # 13 MCP server connections
+├── .mcp.json                        # MCP server connections
 ├── CONNECTORS.md                    # Connector categories and ~~placeholders
-├── LICENSE
-├── README.md
 ├── agents/
 │   └── orchestrator.md              # Routes requests across recipes, connectors and Team Theory
-├── commands/
-│   ├── target.md                    # /human-capital:target
-│   ├── interview-plan.md            # /human-capital:interview-plan
-│   └── underwriting-memo.md         # /human-capital:underwriting-memo
-└── skills/
-    ├── role-target/
-    │   └── SKILL.md                 # Recipe: role target (scorecard)
-    ├── divide-and-conquer/
-    │   └── SKILL.md                 # Recipe: Divide & Conquer interview plan
-    └── underwriting-memo/
-        └── SKILL.md                 # Recipe: candidate underwriting memo
+├── commands/                        # Short aliases: target, interview-plan, underwriting-memo
+├── reference/
+│   ├── recipe.md                    # The five steps every recipe runs
+│   ├── jobs-to-be-done.md           # What a PE talent partner uses the plugin for
+│   ├── cookbook.md                  # Example prompts and multi-step plays
+│   ├── methodology-map.md           # What Team Theory's methodology covers, and how to query it
+│   └── memory-and-documents.md      # Reading and writing the firm's documents, records and memory
+└── skills/                          # One recipe per Team Theory workflow
+    ├── role-target/  job-description/  screening-interview/  quick-interview-plan/
+    ├── deep-dive-interview/  divide-and-conquer/  candidate-research/  quote-ranking/
+    ├── leadership-assessment/  reference-check/  underwriting-memo/  candidate-closing/
+    └── portfolio-talent-review/
 ```
 
 ## How the recipes are written
@@ -112,13 +104,19 @@ Every skill in this plugin is a recipe, in the sense Zapier uses the word. **A s
 - **The output format:** the artifact's layout, length, tables and citation style. Format only, never content.
 - **Where the result goes:** the destinations to offer, after an explicit yes.
 
-Each recipe ends with `check_methodology_trace` and fixes what it reports before the user sees the result.
+The steps every recipe shares (load the method, fetch, produce, check with `check_methodology_trace`, offer destinations) live once in [reference/recipe.md](reference/recipe.md). A skill file holds only its workflow id, inputs table, destinations table and output format.
+
+**To add a recipe:** copy any skill folder, set the workflow id, fill the three tables and the output format, and add a row to the orchestrator's routing table.
 
 Keep new skills to this shape. A rule about what a good question, competency or memo is belongs in Team Theory's methodology, not in a skill: written there, it reaches every recipe and the Team Theory app at once, and improves with each methodology release. Written in a skill, it is a second copy that drifts.
 
-**The orchestrator** (`agents/orchestrator.md`) is a subagent that routes requests: it holds the map of what each connector and each Team Theory tool can do, hands off to a recipe when one matches, and otherwise loads the matching Team Theory workflow. Like the recipes, it holds no judgment of its own. When you add a recipe or a connector, add it to the orchestrator's map.
+**The orchestrator** (`agents/orchestrator.md`) is a subagent that routes requests: it holds the map of what each connector and each Team Theory tool can do, hands off to a recipe when one matches, runs multi-step plays from the cookbook, and otherwise loads the matching Team Theory workflow. Like the recipes, it holds no judgment of its own. When you add a recipe or a connector, add it to the orchestrator's map.
 
-**Commands** are entry points: one sentence to orient the user, then the skill.
+**The reference files** give the orchestrator and the recipes their orientation: the jobs a PE talent partner does, a cookbook of prompts and plays, a map of what Team Theory's methodology covers and how to query it, and how to read and write the firm's documents and memory. They describe what exists and where to find it; they hold no method.
+
+**Team Theory as the record.** Recipes read the firm's memory (`get_organization_memory`) before they write, read whole documents with `get_document` rather than search fragments, and write records only with an explicit yes. Tools to save documents and add memories are on Team Theory's roadmap; the recipes check for them on every run and use them when they appear.
+
+**Commands** are short aliases for the three original recipes. Every other recipe is invoked by its skill name.
 
 **Design decisions:**
 - Tool-agnostic — skills refer to connector categories (`~~ATS`, `~~meeting transcripts`…), so any tool in a category works
