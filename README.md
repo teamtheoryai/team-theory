@@ -68,7 +68,7 @@ These are native Claude integrations — no MCP connector install needed. They'r
 ## Quick Start
 
 1. Install the plugin:
-   - **Claude Code:** `/plugin marketplace add teamtheoryai/human-capital-plugin`, then `/plugin install human-capital@human-capital`
+   - **Claude Code:** `/plugin marketplace add teamtheoryai/team-theory`, then `/plugin install human-capital@human-capital`
    - **Cowork:** add this repository as a plugin
 2. Sign in to Team Theory when prompted, and connect any optional platforms you use
 3. Run `/human-capital:target` with the role, and point Claude at the JD or intake call if you have one
